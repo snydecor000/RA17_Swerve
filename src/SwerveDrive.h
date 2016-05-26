@@ -5,8 +5,8 @@
  *      Author: Taylor Horne
  */
 
-#ifndef SRC_DRIVE_H_
-#define SRC_DRIVE_H_
+#ifndef SRC_SWERVEDRIVE_H_
+#define SRC_SWERVEDRIVE_H_
 #include "WPILib.h"
 #include "Logger.h"
 
@@ -53,4 +53,4 @@ private:
 
 };
 
-#endif /* SRC_DRIVE_H_ */
+#endif /* SRC_SWERVEDRIVE_H_ */
