@@ -39,52 +39,52 @@ Drive::Drive(CANTalon * fr, CANTalon * br, CANTalon * fl, CANTalon * bl,
 	FR->EnableControl();
 
 	BR = br;
-	BR->SetControlMode(CANTalon::kSpeed);
-	BR->ConfigEncoderCodesPerRev(80);
-	BR->SetFeedbackDevice(CANTalon::QuadEncoder);
+	//BR->SetControlMode(CANTalon::kSpeed);
+	//BR->ConfigEncoderCodesPerRev(80);
+	//BR->SetFeedbackDevice(CANTalon::QuadEncoder);
 	//BR->SetCloseLoopRampRate()
-	BR->SetPID(SpeedP,SpeedI,SpeedD);
-	BR->EnableControl();
+	//BR->SetPID(SpeedP,SpeedI,SpeedD);
+	//BR->EnableControl();
 
 	FL = fl;
-	FL->SetControlMode(CANTalon::kSpeed);
-	FL->ConfigEncoderCodesPerRev(80);
-	FL->SetFeedbackDevice(CANTalon::QuadEncoder);
+	//FL->SetControlMode(CANTalon::kSpeed);
+	//FL->ConfigEncoderCodesPerRev(80);
+	//FL->SetFeedbackDevice(CANTalon::QuadEncoder);
 	//FL->SetCloseLoopRampRate()
-	FL->SetPID(SpeedP,SpeedI,SpeedD);
-	FL->EnableControl();
+	//FL->SetPID(SpeedP,SpeedI,SpeedD);
+	//FL->EnableControl();
 
 	BL = bl;
-	BL->SetControlMode(CANTalon::kSpeed);
-	BL->ConfigEncoderCodesPerRev(80);
-	BL->SetFeedbackDevice(CANTalon::QuadEncoder);
+	//BL->SetControlMode(CANTalon::kSpeed);
+	//BL->ConfigEncoderCodesPerRev(80);
+	//BL->SetFeedbackDevice(CANTalon::QuadEncoder);
 	//BL->SetCloseLoopRampRate()
-	BL->SetPID(SpeedP,SpeedI,SpeedD);
-	BL->EnableControl();
+	//BL->SetPID(SpeedP,SpeedI,SpeedD);
+	//BL->EnableControl();
 
 	FRa = fra;
 	FRa->SetControlMode(CANTalon::kPercentVbus);
 	BRa = bra;
-	BRa->SetControlMode(CANTalon::kPercentVbus);
+	//BRa->SetControlMode(CANTalon::kPercentVbus);
 	FLa = fla;
-	FLa->SetControlMode(CANTalon::kPercentVbus);
+//	FLa->SetControlMode(CANTalon::kPercentVbus);
 	BLa = bla;
-	BLa->SetControlMode(CANTalon::kPercentVbus);
+//	BLa->SetControlMode(CANTalon::kPercentVbus);
 
 	FRe = fre;
 	BRe = bre;
 	FLe = fle;
 	BLe = ble;
 
-	FLc = new PIDController(SteerP,SteerI,SteerD,FLe,FLa,0.05);
-	FLc->Disable();
-	FLc->SetPIDSourceType(PIDSourceType::kDisplacement);
-	FLc->SetContinuous(true);
-	FLc->SetInputRange(0,SteerEncMax);
-	FLc->SetOutputRange(-SteerSpeed,SteerSpeed);
-	FLc->SetTolerance(SteerTolerance);
-	FLc->SetSetpoint(0);
-	FLc->Enable();
+	FLc = NULL; //new PIDController(SteerP,SteerI,SteerD,FLe,FLa,0.05);
+	//FLc->Disable();
+	//FLc->SetPIDSourceType(PIDSourceType::kDisplacement);
+	//FLc->SetContinuous(true);
+	//FLc->SetInputRange(0,SteerEncMax);
+	//FLc->SetOutputRange(-SteerSpeed,SteerSpeed);
+	//FLc->SetTolerance(SteerTolerance);
+	//FLc->SetSetpoint(0);
+	//FLc->Enable();
 
 	FRc = new PIDController(SteerP,SteerI,SteerD,FRe,FRa);
 	FRc->Disable();
@@ -96,25 +96,25 @@ Drive::Drive(CANTalon * fr, CANTalon * br, CANTalon * fl, CANTalon * bl,
 	FRc->SetSetpoint(0);
 	FRc->Enable();
 
-	BRc = new PIDController(SteerP,SteerI,SteerD,BRe,BRa);
-	BRc->Disable();
-	BRc->SetPIDSourceType(PIDSourceType::kDisplacement);
-	BRc->SetContinuous(true);
-	BRc->SetInputRange(0,SteerEncMax);
-	BRc->SetOutputRange(-SteerSpeed,SteerSpeed);
-	BRc->SetTolerance(SteerTolerance);
-	BRc->SetSetpoint(0);
-	BRc->Enable();
+	BRc = NULL; // new PIDController(SteerP,SteerI,SteerD,BRe,BRa);
+	//BRc->Disable();
+	//BRc->SetPIDSourceType(PIDSourceType::kDisplacement);
+	//BRc->SetContinuous(true);
+	//BRc->SetInputRange(0,SteerEncMax);
+	//BRc->SetOutputRange(-SteerSpeed,SteerSpeed);
+	//BRc->SetTolerance(SteerTolerance);
+	//BRc->SetSetpoint(0);
+	//BRc->Enable();
 
-	BLc = new PIDController(SteerP,SteerI,SteerD,BLe,BLa);
-	BLc->Disable();
-	BLc->SetPIDSourceType(PIDSourceType::kDisplacement);
-	BLc->SetContinuous(true);
-	BLc->SetInputRange(0,SteerEncMax);
-	BLc->SetOutputRange(-SteerSpeed,SteerSpeed);
-	BLc->SetTolerance(SteerTolerance);
-	BLc->SetSetpoint(0);
-	BLc->Enable();
+	BLc = NULL; //new PIDController(SteerP,SteerI,SteerD,BLe,BLa);
+	//BLc->Disable();
+	//BLc->SetPIDSourceType(PIDSourceType::kDisplacement);
+	//BLc->SetContinuous(true);
+	//BLc->SetInputRange(0,SteerEncMax);
+	//BLc->SetOutputRange(-SteerSpeed,SteerSpeed);
+	//BLc->SetTolerance(SteerTolerance);
+	//BLc->SetSetpoint(0);
+	//BLc->Enable();
 
 	length = Config::GetSetting("FrameLength",1);
 	width = Config::GetSetting("FrameWidth",1);
@@ -150,9 +150,9 @@ void Drive::Swerve(double x, double y, double z, double gyro)
 	if(ws4 > max){max = ws4;}
 	if(max > 1){ws1 /= max;ws2 /= max;ws3 /= max;ws4 /= max;}
 	FR->Set(ws1 * DriveCIMMaxRPM);
-	FL->Set(ws2 * DriveCIMMaxRPM);
-	BL->Set(ws3 * DriveCIMMaxRPM);
-	BR->Set(ws4 * DriveCIMMaxRPM);
+	//FL->Set(ws2 * DriveCIMMaxRPM);
+	//BL->Set(ws3 * DriveCIMMaxRPM);
+	//BR->Set(ws4 * DriveCIMMaxRPM);
 
 	wa1 = atan2(b,c) * 180.0f/PI;
 	wa2 = atan2(b,d) * 180.0f/PI;
@@ -163,9 +163,9 @@ void Drive::Swerve(double x, double y, double z, double gyro)
 	if(wa3 < 0){wa3 += 360;}
 	if(wa4 < 0){wa4 += 360;}
 	FRc->SetSetpoint(wa1*(SteerEncMax/360.0f));
-	FLc->SetSetpoint(wa2*(SteerEncMax/360.0f));
-	BLc->SetSetpoint(wa3*(SteerEncMax/360.0f));
-	BRc->SetSetpoint(wa4*(SteerEncMax/360.0f));
+	//FLc->SetSetpoint(wa2*(SteerEncMax/360.0f));
+	//BLc->SetSetpoint(wa3*(SteerEncMax/360.0f));
+	//BRc->SetSetpoint(wa4*(SteerEncMax/360.0f));
 }
 
 void Drive::SetupLogging(Logger * logger)
