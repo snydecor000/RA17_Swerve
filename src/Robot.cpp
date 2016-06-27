@@ -10,26 +10,16 @@
 #include "Logger.h"
 #include "Config.h"
 #include "Gamepad.h"
-#include "Drive.h"
+#include "SwerveDrive.h"
 
 using namespace std;
 
 class Robot: public IterativeRobot
 {
 private:
-	LiveWindow *lw = LiveWindow::GetInstance();
 	CANTalon * motorFR;
-	CANTalon * motorFL;
-	CANTalon * motorBL;
-	CANTalon * motorBR;
 	CANTalon * angleFR;
-	CANTalon * angleFL;
-	CANTalon * angleBL;
-	CANTalon * angleBR;
 	AnalogInput * absEncFR;
-	AnalogInput * absEncFL;
-	AnalogInput * absEncBL;
-	AnalogInput * absEncBR;
 	AnalogGyro * gyro;
 	BuiltInAccelerometer * acceler;
 	Logger * logger;
@@ -40,17 +30,8 @@ public:
 	Robot()
 	{
 		motorFR = NULL;
-		motorFL = NULL;
-		motorBL = NULL;
-		motorBR = NULL;
 		angleFR = NULL;
-		angleFL = NULL;
-		angleBL = NULL;
-		angleBR = NULL;
 		absEncFR = NULL;
-		absEncFL = NULL;
-		absEncBL = NULL;
-		absEncBR = NULL;
 		gyro = NULL;
 		acceler = NULL;
 		logger = NULL;
@@ -62,30 +43,19 @@ public:
 	void RobotInit()
 	{
 		motorFR = new CANTalon(3);
-		motorFL = new CANTalon(4);
-		motorBL = new CANTalon(5);
-		motorBR = new CANTalon(6);
 		angleFR = new CANTalon(7);
-		angleFL = new CANTalon(8);
-		angleBL = new CANTalon(9);
-		angleBR = new CANTalon(10);
 		////////////////////////////////////////////////
 		absEncFR = new AnalogInput(0);
-		absEncFL = new AnalogInput(1);
-		absEncBL = new AnalogInput(2);
-		absEncBR = new AnalogInput(3);
 		////////////////////////////////////////////////
-		gyro = new AnalogGyro(4);
-		gyro->Reset();
-		gyro->Calibrate();
-		acceler = new BuiltInAccelerometer();
+//		gyro = new AnalogGyro(4);
+//		gyro->Reset();
+//		gyro->Calibrate();
+//		acceler = new BuiltInAccelerometer();
 		////////////////////////////////////////////////
 		logger = new Logger();
 		timer = new Timer();
 		////////////////////////////////////////////////
-		drive = new Drive(motorFR,motorBR,motorFL,motorBL,
-						angleFR,angleBR,angleFL,angleBL,
-						absEncFR,absEncBR,absEncFL,absEncBL);
+		drive = new Drive(motorFR,angleFR,absEncFR);
 		////////////////////////////////////////////////
 		driver = new Gamepad(0);
 
@@ -104,23 +74,23 @@ public:
 
 	void TeleopInit()
 	{
-		ReloadConfig();
+//		ReloadConfig();
 		timer->Reset();
 		timer->Start();
-		StartLogging("Teleop", logger);
-		SetupLogging();
-		gyro->Reset();
+//		StartLogging("Teleop", logger);
+//		SetupLogging();
+//		gyro->Reset();
 	}
 
 	void TeleopPeriodic()
 	{
-		drive->Swerve(driver->GetRightX(),driver->GetRightY(),driver->GetLeftX(),gyro->GetAngle());
-		Log(timer->Get());
+		drive->Swerve(driver->GetRightX(),driver->GetRightY(),driver->GetLeftX(),0);
+//		Log(timer->Get());
 	}
 
 	void DisabledInit()
 	{
-		logger->Close();
+//		logger->Close();
 	}
 
 	void DisabledPeriodic()
@@ -130,7 +100,7 @@ public:
 
 	void TestPeriodic()
 	{
-		lw->Run();
+//		lw->Run();
 	}
 
 	void StartLogging(string mode, Logger * l)
@@ -163,9 +133,9 @@ public:
 	void SetupLogging()
 	{
 		logger->AddAttribute("Time");
-		logger->AddAttribute("AccX");
-		logger->AddAttribute("AccY");
-		logger->AddAttribute("AccZ");
+//		logger->AddAttribute("AccX");
+//		logger->AddAttribute("AccY");
+//		logger->AddAttribute("AccZ");
 		drive->SetupLogging(logger);
 		logger->WriteAttributes();
 	}
@@ -173,9 +143,9 @@ public:
 	void Log(float time)
 	{
 		logger->Log("Time", time);
-		logger->Log("AccX", acceler->GetX());
-		logger->Log("AccY", acceler->GetY());
-		logger->Log("AccZ", acceler->GetZ());
+//		logger->Log("AccX", acceler->GetX());
+//		logger->Log("AccY", acceler->GetY());
+//		logger->Log("AccZ", acceler->GetZ());
 		drive->Log(logger);
 		logger->WriteLine();
 	}

@@ -13,9 +13,7 @@
 class Drive
 {
 public:
-	Drive(CANTalon * fr, CANTalon * br, CANTalon * fl, CANTalon * bl,
-		CANTalon * fra, CANTalon * bra, CANTalon * fla, CANTalon * bla,
-		AnalogInput * fre, AnalogInput * bre, AnalogInput * fle, AnalogInput * ble);
+	Drive(CANTalon * fr,CANTalon * fra, AnalogInput * fre);
 	~Drive();
 	void Swerve(double x, double y, double z, double gyro);
 	void Log(Logger * logger);
@@ -23,22 +21,10 @@ public:
 	void ReloadConfig();
 
 private:
-	CANTalon * FL;
-	CANTalon * BL;
 	CANTalon * FR;
-	CANTalon * BR;
-	CANTalon * FLa;
-	CANTalon * BLa;
 	CANTalon * FRa;
-	CANTalon * BRa;
-	AnalogInput * FLe;
-	AnalogInput * BLe;
 	AnalogInput * FRe;
-	AnalogInput * BRe;
-	PIDController * FLc;
-	PIDController * BLc;
 	PIDController * FRc;
-	PIDController * BRc;
 
 	double SpeedP,SpeedI,SpeedD;
 	double SteerP,SteerI,SteerD;
